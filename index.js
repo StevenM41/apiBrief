@@ -1,5 +1,4 @@
 const express = require('express');
-const http = require("node:http");
 const app = express();
 const port = 3000;
 
@@ -14,15 +13,9 @@ let produits = [
 
 app.get('/produits', (req,res) => {
     res.status(200).json(produits)
-})
+});
 
-app.get('/produits/:id', (req,res) => {
-    const id = parseInt(req.params.id)
-    const produit = produits.find(parking => parking.id === id)
-    res.status(200).json(produit)
-})
-
-app.post('/post', (req,res) => {
+app.post('/produits', (req,res) => {
     produits.push(req.body)
     res.status(201).json(produits)
 })
@@ -33,14 +26,14 @@ app.put('/produits/:id', (req,res) => {
     produit.nom = req.body.nom;
     produit.prix = req.body.prix;
     produit.quantite = req.body.quantite;
-    res.status(200).json(produit)
+    res.status(200).json(produits)
 })
 
 app.delete('/produits/:id', (req, res) => {
     const id = parseInt(req.params.id);
     let produit = produits.find(p => p.id === id);
-    produits.slice(produits.indexOf(produit), 1)
-    res.status(200).json(produit)
+    produits.splice(produits.indexOf(produit), 1)
+    res.status(200).json(produits)
 })
 
 app.listen(port, () => {
